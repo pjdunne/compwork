@@ -754,7 +754,7 @@ if not isData:
 ################################################################
 ### General Config
 ################################################################
-process.MessageLogger.cerr.FwkReport.reportEvery = 50000
+process.MessageLogger.cerr.FwkReport.reportEvery = 100#50000
 process.MessageLogger.suppressError = cms.untracked.vstring( 'patTrigger','HLTConfigData' )
 process.MessageLogger.suppressWarning = cms.untracked.vstring( 'patTrigger','HLTConfigData')
 
@@ -824,6 +824,7 @@ if (release == '53X'):
         #'file:/Volumes/Storage/samples/VBF_HToTauTau_M-125-53X.root'
         #'file:/Volumes/Storage/samples/embed_mutau_v1_DYJetsToLL.root'
     )
+    process.source.duplicateCheckMode = cms.untracked.string('noDuplicateCheck')
     process.GlobalTag.globaltag = cms.string('START53_V15::All')
 
 process.options   = cms.untracked.PSet( wantSummary = cms.untracked.bool(True) )
