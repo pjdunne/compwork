@@ -9,9 +9,9 @@ printf "%-10s %-10s %-10s %-10s\n" "NEvents" "TotCPUT" "TotRealT" "TotSysT" > $o
 for (( iteration=1; iteration<=$niterations; iteration++ ))
   do
   #RUN CONFIG
-  date>datetmp.txt
+  tstart=`date +%s`
   cmsRun compwork_5_3_7_cfg.py release=53X nevents=$evtoproc filetoproc=$filetoprocess &> tmp.txt #| tee tmp.txt
-  date>datetmp2.txt
+  tfin=`date +%s`
   #cat exampleoutput.txt > tmp.txt #TEST USING SAMPLE OUTPUT
   
   #GET TIME INFORMATION
@@ -22,26 +22,27 @@ for (( iteration=1; iteration<=$niterations; iteration++ ))
   totalrealtime=$(expr $perevrealtime*$nevents|bc)
 
   
-  cat datetmp.txt | awk '{print $4}' | sed 's/:/ /g' > tmp2.txt
-  cat datetmp2.txt | awk '{print $4}' | sed 's/:/ /g' > tmp3.txt
-  hstart=`cat tmp2.txt|awk '{print $1}'`
-  mstart=`cat tmp2.txt|awk '{print $2}'`
-  sstart=`cat tmp2.txt|awk '{print $3}'`
-  startsec=$(expr 3600*$hstart+60*$mstart+$sstart|bc)
-  hfin=`cat tmp3.txt|awk '{print $1}'`
-  mfin=`cat tmp3.txt|awk '{print $2}'`
-  sfin=`cat tmp3.txt|awk '{print $3}'`
-  endsec=$(expr 3600*$hfin+60*$mfin+$sfin|bc)
-  totalsystime=$(expr $endsec-$startsec|bc)
-  if [ `cat datetmp.txt | awk '{print $3}'` -ne `cat datetmp.txt | awk '{print $3}'` ]
-      then
-      totalsystime=$(expr $totalsystime+86400|bc)
-  fi
+  #cat datetmp.txt | awk '{print $4}' | sed 's/:/ /g' > tmp2.txt
+  #cat datetmp2.txt | awk '{print $4}' | sed 's/:/ /g' > tmp3.txt
+  #hstart=`cat tmp2.txt|awk '{print $1}'`
+  #mstart=`cat tmp2.txt|awk '{print $2}'`
+  #sstart=`cat tmp2.txt|awk '{print $3}'`
+  #startsec=$(expr 3600*$hstart+60*$mstart+$sstart|bc)
+  #hfin=`cat tmp3.txt|awk '{print $1}'`
+  #mfin=`cat tmp3.txt|awk '{print $2}'`
+  #sfin=`cat tmp3.txt|awk '{print $3}'`
+  #endsec=$(expr 3600*$hfin+60*$mfin+$sfin|bc)
+  totalsystime=$(expr $tstart-$tfin|bc)
+  
+  #if [ `cat datetmp.txt | awk '{print $3}'` -ne `cat datetmp.txt | awk '{print $3}'` ]
+  #    then
+  #    totalsystime=$(expr $totalsystime+86400|bc)
+  #fi
 
   #OUTPUT
   echo Nevents: $nevents, TotCPUt: $totalcputime s, TotRealt: $totalrealtime s, TotSyst: $totalsystime s
   #echo $nevents $totalcputime $totalrealtime $totalsystime >> output.txt
   printf "%-10d %-10f %-10f %-10f\n" "$nevents" "$totalcputime" "$totalrealtime" "$totalsystime" >> $outfile
-  rm tmp.txt tmp2.txt tmp3.txt
-  rm datetmp.txt datetmp2.txt
+  rm tmp.txt 
+  #rm datetmp.txt datetmp2.txt
 done
