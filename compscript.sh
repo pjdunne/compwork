@@ -32,7 +32,7 @@ for (( iteration=1; iteration<=$niterations; iteration++ ))
   #mfin=`cat tmp3.txt|awk '{print $2}'`
   #sfin=`cat tmp3.txt|awk '{print $3}'`
   #endsec=$(expr 3600*$hfin+60*$mfin+$sfin|bc)
-  totalsystime=$(expr $tstart-$tfin|bc)
+  totalsystime=$(expr $tfin-$tstart|bc)
   
   #if [ `cat datetmp.txt | awk '{print $3}'` -ne `cat datetmp.txt | awk '{print $3}'` ]
   #    then
