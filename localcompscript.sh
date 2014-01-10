@@ -2,7 +2,7 @@
 
 evtoproc=$1
 niterations=$2
-filetoprocess="MyOutputFile.root"
+filetoprocess="file:MyOutputFile.root"
 outfile=${1}eventsoutput.txt
 #filetoprocess="root://cmssrv32.fnal.gov:1094//store/mc/Summer12_DR53X/VBF_HToZZTo4Nu_M-120_8TeV-pythia6/AODSIM/PU_S10_START53_V7A-v1/00000/1C2FB96C-2B11-E211-A8D2-001E67396A8B.root"
 printf "%-10s %-10s %-10s %-10s\n" "NEvents" "TotCPUT" "TotRealT" "TotSysT" > $outfile
